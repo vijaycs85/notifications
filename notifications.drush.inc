@@ -40,6 +40,6 @@ function notifications_drush_help($section) {
  */
 function drush_notification_clean_sent() {
   module_load_include('inc', 'notifications', 'notifications.admin');
-  notifications_clean_sent_history();
+  _notifications_clean_sent_history();
   drush_log(dt('Notifications sent history cleared.'));
 }

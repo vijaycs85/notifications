@@ -505,13 +505,13 @@ function notifications_admin_cleanup_form() {
  * @param $form_state
  */
 function notifications_admin_cleanup_sent_submit($form, &$form_state) {
-  notifications_clean_sent_history();
+  _notifications_clean_sent_history();
   drupal_set_message(t('Notifications sent history cleared.'));
 }
 
 /**
  * Helper to cleanup sent history.
  */
-function notifications_clean_sent_history() {
-  db_query("DELETE from {notifications_sent}");
+function _notifications_clean_sent_history() {
+  db_query("TRUNCATE from {notifications_sent}");
 }
