@@ -2078,3 +2078,10 @@ function notifications_queue() {
   //return call_user_func_array(array($class, $method), $args);
   return $queue;
 }
+
+/**
+ * Helper to cleanup sent history.
+ */
+function _notifications_clean_sent_history() {
+  db_query("TRUNCATE {notifications_sent}");
+}
