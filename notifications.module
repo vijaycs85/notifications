@@ -74,6 +74,15 @@ function notifications_menu() {
     'access arguments' => array('administer site configuration'),
     'file' => 'notifications.admin.inc',
   );
+  $items['admin/messaging/notifications/cleanup'] = array(
+    'title' => 'Cleanup',
+    'description' => 'Cleanup notification sent history.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('notifications_admin_cleanup_form'),
+    'type' => MENU_LOCAL_TASK,
+    'access arguments' => array('administer site configuration'),
+    'file' => 'notifications.admin.inc',
+  );
 
   $items['admin/messaging/notifications/subscriptions'] = array(
     'title' => 'Subscriptions',

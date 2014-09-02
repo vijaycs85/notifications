@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains admin UI test cases.
+ */
+
+/**
+ * Class notificationAdminUiTest
+ */
+class notificationAdminUiTest extends DrupalWebTestCase {
+
+  /**
+   * @return array
+   */
+  public function getInfo() {
+    return array(
+      'name' => 'Admin UI test',
+      'group' => 'Notifications',
+      'description' => 'Admin UI of notifications module' );
+  }
+
+  protected function setUp() {
+    parent::setUp('notifications', 'messaging');
+    $user = $this->drupalCreateUser(array('administer site configuration'));
+    $this->drupalLogin($user);
+
+  }
+
+  /**
+   * Tests admin sent history clean admin page.
+   */
+  public function testCleanSentHistoryPage() {
+    // Create an entry in notifications_sent table.
+    db_query("INSERT INTO {notifications_sent}(mdid, send_interval, sent, counter) VALUES(%d, '%d', %d, %d)", 1212, 30, time(), 1);
+    $this->drupalPost('admin/messaging/notifications/cleanup', array(), t('Clean sent history'));
+    $this->assertRaw(t('Notifications sent history cleared.'));
+
+    // Make sure notifications_sent is empty.
+    $query = db_query("SELECT COUNT(mdid) AS count FROM {notifications_sent}");
+    $result = db_fetch_object($query);
+    $this->assertEqual($result->count, 0, t('notifications_sent is empty.'));
+  }
+
+}

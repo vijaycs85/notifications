@@ -483,3 +483,35 @@ function theme_notifications_form_table($element) {
   $output .= drupal_render($element);
   return $output;
 }
+
+/**
+ * Allows to cleanup notification sent history.
+ */
+function notifications_admin_cleanup_form() {
+  $form = array();
+  $form['clean_sent_history'] = array(
+    '#type' => 'submit',
+    '#value' => t('Clean sent history'),
+    '#submit' => array('notifications_admin_cleanup_sent_submit')
+  );
+  return $form;
+}
+
+/**
+ * Submit handler for 'Clean sent history'
+ * button in notifications_admin_cleanup_form.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function notifications_admin_cleanup_sent_submit($form, &$form_state) {
+  notifications_clean_sent_history();
+  drupal_set_message(t('Notifications sent history cleared.'));
+}
+
+/**
+ * Helper to cleanup sent history.
+ */
+function notifications_clean_sent_history() {
+  db_query("DELETE from {notifications_sent}");
+}
