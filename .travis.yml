@@ -30,7 +30,7 @@ before_script:
   - mysql -e 'create database notifications'
   - php -d sendmail_path=`which true` ~/.composer/vendor/bin/drush.php --yes core-quick-drupal --core=drupal-6.x --no-server --db-url=mysql://root:@127.0.0.1/notifications
   - drush --yes dl simpletest notifications
-  - patch -p0 < notifications/drupal/sites/all/modules/simpletest/D6-core-simpletest.patch
+  - patch -p0 < ${TRAVIS_BUILD_DIR}/notifications/drupal/sites/all/modules/simpletest/D6-core-simpletest.patch
   # reference and enable notifications in build site
   - ln -s $(readlink -e $(cd -)) notifications/drupal/sites/all/modules/notifications
   - cd notifications/drupal
