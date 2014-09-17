@@ -28,7 +28,7 @@ before_script:
 
   # create new site, stubbing sendmail path with true to prevent delivery errors and manually resolving drush path
   - mysql -e 'create database notifications'
-  - php -d sendmail_path=`which true` ~/.composer/vendor/bin/drush.php --yes core-quick-drupal --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/notifications --enable=simpletest notifications
+  - php -d sendmail_path=`which true` ~/.composer/vendor/bin/drush.php --yes core-quick-drupal --core=6.x --profile=testing --no-server --db-url=mysql://root:@127.0.0.1/notifications --enable=simpletest notifications
 
   # reference and enable notifications in build site
   - ln -s $(readlink -e $(cd -)) notifications/drupal/sites/all/modules/notifications
